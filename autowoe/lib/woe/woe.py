@@ -92,7 +92,7 @@ class WoE:
         if len(x.loc[x.isin(spec_values_)]) == 0 or len(spec_values_) == 0:
             return df_cod
 
-        if df_cod.dtypes != object:
+        if df_cod.dtypes is not object:
             df_cod = df_cod.astype(object)
 
         df_cod.loc[x.isin(spec_values_)] = x.loc[x.isin(spec_values_)]

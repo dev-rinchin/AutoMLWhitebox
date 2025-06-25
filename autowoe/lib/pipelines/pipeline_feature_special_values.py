@@ -159,7 +159,7 @@ class FeatureSpecialValues:
                     enc_type = "__Small__"
                     # d[enc_type] = None
 
-                if train_.loc[:, col].dtypes != object: # trouble when we have numerical col
+                if train_.loc[:, col].dtypes is not object:  # trouble when we have numerical col
                     train_[col] = train_[col].astype(object)
 
                 train_.loc[train_[col].isin(small_cat), col] = enc_type
