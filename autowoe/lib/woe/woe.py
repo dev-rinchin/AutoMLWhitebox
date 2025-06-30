@@ -56,7 +56,7 @@ class WoE:
     def __woe(self, df: pd.DataFrame) -> Tuple[Dict, DataFrame, Tuple[float, ...]]:
         """Calculate WoE coefficient for each category values."""
         df.columns = [0, "target"]
-        stat = df.groupby(0)["target"].agg([np.mean, np.count_nonzero, np.size])
+        stat = df.groupby(0)["target"].agg(["mean", np.count_nonzero, np.size])
 
         if self.target_type == TaskType.BIN:
             stat["bad"] = stat["size"] - stat["count_nonzero"]
@@ -88,6 +88,13 @@ class WoE:
 
         x_.loc[x_.isin(spec_values_)] = -np.inf
         df_cod = self.__codding(x_)
+
+        if len(x.loc[x.isin(spec_values_)]) == 0 or len(spec_values_) == 0:
+            return df_cod
+
+        if df_cod.dtypes is not object:
+            df_cod = df_cod.astype(object)
+
         df_cod.loc[x.isin(spec_values_)] = x.loc[x.isin(spec_values_)]
 
         return df_cod
@@ -240,5 +247,5 @@ class WoE:
         for value in cv_index_split.values():
             train_index, test_index = value
             self.fit(x.iloc[train_index], y.iloc[train_index], spec_values)
-            x_.iloc[test_index] = self.transform(x.iloc[test_index], spec_values)
+            x_.iloc[test_index] = self.transform(x.iloc[test_index], spec_values).astype(x.dtype)
         return x_.astype(float)
