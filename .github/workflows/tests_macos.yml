@@ -37,10 +37,6 @@ jobs:
       - name: install deps for MacOS
         run: brew update && brew install libomp cairo pango gdk-pixbuf libffi
 
-      - name: install conda dependencies
-        run: |
-          conda install pip numpy==1.26.4
-
       - name: install with pip
         run: |
           pip install tox==4.23.2
