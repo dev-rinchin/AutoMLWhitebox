@@ -7,12 +7,10 @@ on:
 
   # Manually triggerable in github
   workflow_dispatch:
+  
+  push:
 
-  workflow_run:
-    # workflows: ["tests_ubuntu"]
-    branches: [master]
-    types:
-      - completed
+  pull_request:
 
 jobs:
   macos-tests:
