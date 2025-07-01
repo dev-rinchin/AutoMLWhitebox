@@ -7,10 +7,11 @@ on:
 
   # Manually triggerable in github
   workflow_dispatch:
-  
-  push:
 
-  pull_request:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
 
 jobs:
   macos-tests:
