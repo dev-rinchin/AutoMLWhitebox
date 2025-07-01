@@ -32,13 +32,14 @@ jobs:
           auto-update-conda: true
           channels: conda-forge
           python-version: ${{ matrix.python-version }}
-          activate-environment: test
+          activate-environment: testenv
 
       - name: install deps for MacOS
         run: brew update && brew install libomp cairo pango gdk-pixbuf libffi
 
       - name: install with pip
         run: |
+          conda activate testenv
           pip install tox==4.23.2
           pip install tox-gh-actions==3.2.0
 
